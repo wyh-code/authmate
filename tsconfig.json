@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "declaration": true,
+    "declarationDir": "./lib" /* 声明文件目录 */,
+    "outDir": "lib",
+    "rootDir": "./src" /* 项目源码根目录，用来控制编译输出的目录结构 */,
+    "strict": true,
+    "esModuleInterop": true,
+    "moduleResolution": "Bundler",
+    "skipLibCheck": true,
+    "typeRoots": ["./node_modules/@types", "./src/index.d.ts"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "lib"]
+}
