@@ -1,8 +1,20 @@
 
 export interface ICreateAuthmateProps {
+  container: string;
   uid: string;
   appid: string;
-  container: string;
   type?: string;
   state?: string;
+}
+
+export interface RequestConfig extends RequestInit {
+  params?: { [key: string]: any };
+  format?: boolean;
+}
+
+// 定义一个接口表示响应数据
+export interface ResponseData<T> {
+  code: number;
+  data?: T;
+  error?: string;
 }
