@@ -3,9 +3,8 @@ declare class WxAuth {
     options: ICreateAuthmateProps;
     constructor(props: ICreateAuthmateProps);
     initWxLogin: () => void;
-    getConfig: () => Promise<any>;
+    getConfig: () => Promise<import("../type").ResponseData<unknown>>;
     init: () => Promise<void>;
-    fetchUserInfo: (code: any) => Promise<any>;
-    login: () => Promise<unknown>;
+    login: () => Promise<import("../type").ResponseData<unknown>>;
 }
 export default WxAuth;
