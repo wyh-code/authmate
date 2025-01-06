@@ -1,11 +1,11 @@
 import { ICreateAuthmateProps } from '../type';
 declare class WxAuth {
     options: ICreateAuthmateProps;
+    apiClient: any;
     constructor(props: ICreateAuthmateProps);
     initWxLogin: () => void;
     getConfig: () => Promise<any>;
     init: () => Promise<void>;
-    fetchUserInfo: (code: any) => Promise<any>;
-    login: () => Promise<unknown>;
+    login: any;
 }
 export default WxAuth;
