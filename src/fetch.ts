@@ -55,12 +55,13 @@ class HttpClient {
   }
 }
 
-const base_url = 'auth.authmate.cn';
+const base_url = '127.0.0.1:4100';
+// const base_url = 'auth.authmate.cn';
 const createFetch = (options: any) => {
   const headers = {
     authorization: encrypt(options, ''),
     datasource: 'npm'
   };
-  return new HttpClient(`${location.protocol}//${base_url}`, { headers })
+  return new HttpClient(`${location.protocol}//${base_url}`, { headers });
 }
 export default createFetch;
