@@ -13,11 +13,11 @@ const user = await authmate?.login();
 
 ### 如何获取 `appid`、`uid`
 - 进入[官网](www.authmate.cn)，点击登录/注册
-![官网](图片URL)
+![官网](https://github.com/wyh-code/authmate/blob/main/assets/www.authmate.cn.png?raw=true)
 
 - 在首页获取 <b>`uid`</b>
-![UID](图片URL)
+![UID](https://github.com/wyh-code/authmate/blob/main/assets/home.png?raw=true)
 
 - 新建应用获取 <b>`appid`</b>
-![APPID](图片URL)
-![APPID](图片URL)
+![APPID](https://github.com/wyh-code/authmate/blob/main/assets/createApp.png?raw=true)
+![APPID](https://github.com/wyh-code/authmate/blob/main/assets/appid.png?raw=true)
