@@ -11,6 +11,7 @@
     "unlink": "npm unlink @ostore/authmate"
   },
   "dependencies": {
+    "@ostore/authmate": "^2.0.0",
     "umi": "^4.5.3"
   },
   "devDependencies": {
