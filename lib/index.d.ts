@@ -1,8 +1,9 @@
-import { ICreateAuthmateProps } from './type';
-declare class Authmate {
-    instance: any;
-    constructor(props: ICreateAuthmateProps);
-    login(): any;
+import { WechatAuth } from './services/wechat';
+import { QQAuth } from './services/qq';
+import { AuthConfig } from './types/auth';
+export declare class Authmate {
+    static wechat(config: AuthConfig): WechatAuth;
+    static qq(config: AuthConfig): QQAuth;
 }
-declare const createAuthmate: (props: ICreateAuthmateProps) => Authmate | undefined;
-export default createAuthmate;
+export * from './types/auth';
+//# sourceMappingURL=index.d.ts.map

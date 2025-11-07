@@ -2,12 +2,23 @@
   "name": "@ostore/authmate",
   "version": "1.0.6",
   "description": "授权助手，轻松实现微信扫码登录",
-  "main": "lib/index.esm.js",
+  "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
-  "jsnext:main": "lib/index.esm.js",
+  "browser": "lib/index.umd.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.esm.js",
+      "require": "./lib/index.cjs.js",
+      "default": "./lib/index.esm.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
-    "lib"
+    "lib",
+    "README.md",
+    "LICENSE"
   ],
   "keywords": [
     "授权助手",
@@ -30,15 +41,26 @@
   },
   "type": "module",
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "link": "npm link",
+    "dev": "rollup -c -w",
+    "prepublishOnly": "npm run build",
+    "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@types/crypto-js": "^4.2.2",
-    "crypto-js": "^4.2.0",
-    "rollup": "^3.0.0",
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-terser": "^0.4.0",
+    "rollup": "^4.0.0",
     "rollup-plugin-clear": "^2.0.7",
-    "rollup-plugin-typescript2": "^0.34.0",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.36.0",
     "typescript": "^5.0.0"
+  },
+  "sideEffects": false,
+  "dependencies": {
+    "axios": "^1.0.0"
   },
   "repository": {
     "type": "git",

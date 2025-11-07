@@ -1,17 +1,47 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "declaration": true,
-    "declarationDir": "./lib" /* 声明文件目录 */,
-    "outDir": "lib",
-    "rootDir": "./src" /* 项目源码根目录，用来控制编译输出的目录结构 */,
-    "strict": true,
-    "esModuleInterop": true,
-    "moduleResolution": "Bundler",
-    "skipLibCheck": true,
-    "typeRoots": ["./node_modules/@types", "./src/index.d.ts"]
+    // ========== 目标和模块 ==========
+    "target": "ES2015",                  // 编译目标（兼容性和特性平衡）
+    "module": "ESNext",                  // 使用最新的 ES 模块
+    "lib": ["ES2015", "DOM"],            // 包含的类型库
+    
+    // ========== 类型声明 ==========
+    "declaration": true,                 // 生成 .d.ts 类型文件
+    "declarationDir": "./lib",           // 类型文件输出目录
+    "declarationMap": true,              // 生成 .d.ts.map 源映射
+    "emitDeclarationOnly": false,        // 只生成类型文件（false，因为 rollup 处理 JS）
+    
+    // ========== 输出配置 ==========
+    "outDir": "./lib",                   // 输出目录
+    "rootDir": "./src",                  // 源码根目录
+    
+    // ========== 模块解析 ==========
+    "moduleResolution": "node",          // Node.js 风格的模块解析
+    "esModuleInterop": true,             // 允许默认导入 CJS 模块
+    "allowSyntheticDefaultImports": true, // 允许合成默认导入
+    "resolveJsonModule": true,           // 支持导入 JSON
+    
+    // ========== 类型检查 ==========
+    "strict": true,                      // 启用所有严格类型检查
+    "skipLibCheck": true,                // 跳过库文件的类型检查（加快编译）
+    "forceConsistentCasingInFileNames": true, // 强制文件名大小写一致
+    
+    // ========== 其他 ==========
+    "sourceMap": true,                   // 生成 source map
+    "removeComments": false,             // 保留注释
+    "importHelpers": false,              // 不从 tslib 导入辅助函数
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "lib"]
+  
+  // ========== 包含的文件 ==========
+  "include": [
+    "src/**/*"
+  ],
+  
+  // ========== 排除的文件 ==========
+  "exclude": [
+    "node_modules",
+    "lib",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
 }

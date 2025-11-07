@@ -1,23 +1,20 @@
-## 授权助手
-
-### 使用
-只需三行代码，轻松获取用户扫码信息
+## 快速使用
 ```js
-import createAuthmate from '@ostore/authmate';
+import { Authmate } from '@ostore/authmate';
 
-// 创建实例
-const authmate = createAuthmate({ container: 'container', appid: 'appid', uid: 'uid', loop: true});
-// 获取用户信息
-const user = await authmate?.login(); 
+// 微信登录
+const wechatAuth = createAuthmate.wechat({
+  appId: 'your_app_id',
+  appSecret: 'your_app_secret'
+});
+
+// 执行登录
+const result = await wechatAuth.login();
+
+// QQ登录
+const qqAuth = createAuthmate.qq({
+  appId: 'your_qq_app_id',
+  appKey: 'your_app_key'
+});
+
 ```
-
-### 如何获取 `appid`、`uid`
-- 进入[官网](www.authmate.cn)，点击登录/注册
-![官网](https://github.com/wyh-code/authmate/blob/main/assets/www.authmate.cn.png?raw=true)
-
-- 在首页获取 <b>`uid`</b>
-![UID](https://github.com/wyh-code/authmate/blob/main/assets/home.png?raw=true)
-
-- 新建应用获取 <b>`appid`</b>
-![APPID](https://github.com/wyh-code/authmate/blob/main/assets/createApp.png?raw=true)
-![APPID](https://github.com/wyh-code/authmate/blob/main/assets/appid.png?raw=true)
