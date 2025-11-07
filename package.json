@@ -1,6 +1,6 @@
 {
   "name": "@ostore/authmate",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "授权助手，轻松实现微信扫码登录",
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
