@@ -2,6 +2,10 @@
 
 授权助手，轻松实现微信扫码登录
 
+## 官网测试
+
+[【点击前往测试】](https://auth.mocknet.cn/)
+
 ## 快速使用
 ```js
 import { Authmate } from '@ostore/authmate';
