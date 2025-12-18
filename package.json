@@ -1,0 +1,59 @@
+{
+  "name": "@ostore/authmate",
+  "version": "2.1.0",
+  "description": "授权助手，轻松实现微信扫码登录",
+  "author": "wyh-code <578311720@qq.com>",
+  "license": "ISC",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "keywords": [
+    "授权助手",
+    "扫码登录",
+    "微信",
+    "微信扫码登录",
+    "authmate",
+    "auth",
+    "OAuth 2.0",
+    "authorization",
+    "Open Authorization",
+    "wechat",
+    "WeChat"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wyh-code/authmate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wyh-code/authmate/issues"
+  },
+  "homepage": "https://github.com/wyh-code/authmate#readme"
+}
