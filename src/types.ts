@@ -3,9 +3,12 @@
  */
 export interface AuthConfig {
   container: string;  // 二维码容器 ID
+  auto?: boolean;  // 是否自动轮询
+  fetchBase?: string;  // 平台回调域名
   headers?: { // 切换请求头
     datasource: string
-  };  
+  };
+  apiRouter?: ApiConfig; // 服务请求路径 
 }
 
 /**
@@ -25,7 +28,9 @@ export interface AuthResult {
 /**
  * 认证类型
  */
-export type AuthType = 'wx';
+export enum AuthType {
+  WX = 'wx'
+}
 
 /**
  * 登录状态枚举
@@ -36,4 +41,14 @@ export enum LoginStatus {
   SUCCESS = 2,   // 登录成功
   EXPIRED = 3,   // 二维码过期
   FAILED = 4     // 登录失败
+}
+
+export interface ApiConfig {
+  config: string;
+  code2info: string;
+  status: string;
+}
+
+export type ApiRoutes = {
+  [K in AuthType]: ApiConfig
 }

@@ -1,28 +1,14 @@
-import { AuthConfig, AuthType } from "../types";
+import { AuthConfig } from "../types";
+import { FETCH_BASE } from "../constants";
 
 export abstract class BaseAuthService {
   protected config: AuthConfig;
-  protected qrcode_expired: string;
   protected fetchBase: string;
   private traceId: string | null = null;
 
-  // API 路由映射
-  private static readonly API_ROUTES: Record<AuthType, {
-    config: string;
-    code2info: string;
-    status: string; // 新增
-  }> = {
-      wx: {
-        config: '/auth/wx/config',
-        code2info: '/auth/wx/code2info',
-        status: '/auth/wx/status' // 新增
-      }
-    };
-
   constructor(config: AuthConfig) {
     this.config = config;
-    this.fetchBase = 'https://auth.mocknet.cn';
-    this.qrcode_expired = 'https://static.mocknet.cn/static/qrcode_expired.jpg';
+    this.fetchBase = config.fetchBase || FETCH_BASE;
   }
 
   getTraceId(): string | null {
@@ -64,24 +50,25 @@ export abstract class BaseAuthService {
   /**
    * 获取配置
    */
-  async getConfig(type: AuthType) {
-    const url = `${this.fetchBase}${BaseAuthService.API_ROUTES[type].config}`;
+  async getConfig() {
+    const url = `${this.fetchBase}${this.config.apiRouter!.config}`;
     return this.fetchAPI(url, { headers: this.config.headers });
   }
 
   /**
    * 获取用户信息
    */
-  async fetchUserInfo(code: string, type: AuthType) {
-    const url = `${this.fetchBase}${BaseAuthService.API_ROUTES[type].code2info}?code=${code}`;
+  async fetchUserInfo(code: string) {
+    const url = `${this.fetchBase}${this.config.apiRouter!.code2info}?code=${code}`;
     return this.fetchAPI(url);
   }
 
   /**
    * 轮询登录状态（替代 WebSocket）
    */
-  async pollLoginStatus(state: string, type: AuthType, signal?: AbortSignal): Promise<string> {
+  async pollLoginStatus(state: string, signal?: AbortSignal): Promise<string> {
     let retries = 0;
+    if(!this.config.auto) return '请手动调用轮询【this.pollLoginStatus】，或设置【auto=true】';
 
     return new Promise((resolve, reject) => {
       // 检查取消信号
@@ -100,7 +87,7 @@ export abstract class BaseAuthService {
           }
 
           // 请求状态
-          const url = `${this.fetchBase}${BaseAuthService.API_ROUTES[type].status}/${state}`;
+          const url = `${this.fetchBase}${this.config.apiRouter!.status}/${state}`;
           const result = await this.fetchAPI(url, { signal });
 
           // 状态判断

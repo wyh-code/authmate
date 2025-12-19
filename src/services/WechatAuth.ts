@@ -1,4 +1,5 @@
 import { AuthConfig } from '../types';
+import { API_ROUTES, WX_LOGIN_SCRIPT, QR_EXPIRED_TIME } from '../constants'
 import { BaseAuthService } from './BaseAuthService';
 
 export class WechatAuth extends BaseAuthService {
@@ -8,11 +9,17 @@ export class WechatAuth extends BaseAuthService {
   private abortController: AbortController | null = null; // 新增：取消控制器
 
   // 常量定义
-  private static readonly WX_LOGIN_SCRIPT = 'https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js';
-  private static readonly QR_EXPIRED_TIME = 5 * 58 * 1000; // 微信二维码5分钟过期
+  private static readonly WX_LOGIN_SCRIPT = WX_LOGIN_SCRIPT;
+  private static readonly QR_EXPIRED_TIME = QR_EXPIRED_TIME; // 微信二维码5分钟过期
 
   constructor(config: AuthConfig) {
-    super(config);
+    // 先补全默认值
+    const finalConfig: AuthConfig = {
+      ...config,
+      auto: config.auto ?? true,
+      apiRouter: config.apiRouter || API_ROUTES['wx']
+    };
+    super(finalConfig);
     this.qrContainer = config.container;
     this.initWxLoginScript();
   }
@@ -59,17 +66,17 @@ export class WechatAuth extends BaseAuthService {
   private async initQr(): Promise<void> {
     try {
       this.clearQrCodeTimer();
-      const config = await this.getConfig('wx');
-      
+      const config = await this.getConfig();
+
       if (!config || !this.WxLogin) {
         throw new Error('配置或 WxLogin 不可用');
       }
 
       this.createWxLoginQrCode(config);
-      
+
       // 设置过期定时器
       this.qrCodeTimer = setTimeout(
-        () => this.initQr(), 
+        () => this.initQr(),
         WechatAuth.QR_EXPIRED_TIME
       );
     } catch (error) {
@@ -119,24 +126,20 @@ export class WechatAuth extends BaseAuthService {
       if (!traceId) {
         throw new Error('TraceId 不可用');
       }
-      
+
       console.log('[WechatAuth] 开始登录流程, traceId:', traceId);
 
       // 创建取消控制器
       this.abortController = new AbortController();
 
       // 轮询获取登录状态
-      const code = await this.pollLoginStatus(
-        traceId, 
-        'wx',
-        this.abortController.signal
-      );
+      const code = await this.pollLoginStatus(traceId, this.abortController.signal);
 
       console.log('[WechatAuth] 获取到 code:', code);
 
       // 获取用户信息
-      const userInfo = await this.fetchUserInfo(code, 'wx');
-      
+      const userInfo = await this.fetchUserInfo(code);
+
       console.log('[WechatAuth] 登录成功');
       return userInfo;
 
