@@ -1,18 +1,44 @@
+
+// ==================== 配置接口 ====================
 /**
- * 认证配置接口
+ * 认证配置
  */
 export interface AuthConfig {
-  container: string;  // 二维码容器 ID
-  auto?: boolean;  // 是否自动轮询
-  fetchBase?: string;  // 平台回调域名
-  headers?: { // 切换请求头
-    datasource: string
+  /** 二维码容器 DOM ID */
+  container: string;
+  /** 是否自动轮询 */
+  auto?: boolean;
+  /** 服务端请求基础 URL */
+  fetchBase?: string;
+  /** 自定义请求头 */
+  headers?: {
+    datasource: string;
   };
-  apiRouter?: ApiConfig; // 服务请求路径 
+  /** API 路由配置 */
+  apiRouter?: ApiConfig;
+  /** 登录状态变化回调 */
+  onStatusChange?: (status: LoginStatus) => void;
+  /** 二维码刷新回调 */
+  onQrRefresh?: (traceId: string) => void;
+  /** 错误回调 */
+  onError?: (error: { message: string }) => void;
 }
 
 /**
- * 认证结果接口
+ * API 配置
+ */
+export interface ApiConfig {
+  /** 获取配置接口 */
+  config: string;
+  /** code 换取用户信息接口 */
+  code2info: string;
+  /** 查询登录状态接口 */
+  status: string;
+}
+
+// ==================== 响应接口 ====================
+/**
+ * 认证结果
  */
 export interface AuthResult {
   openid: string;
@@ -23,8 +49,39 @@ export interface AuthResult {
   country: string;
   headimgurl: string;
   privilege: string[];
+  [key: string]: any;
 }
 
+/**
+ * 认证状态
+ */
+export interface AuthStatus {
+  /** 当前重试次数 */
+  retries: number;
+  /** 当前 traceId */
+  traceId: string | null;
+}
+
+/**
+ * API 统一响应格式
+ */
+export interface ApiResponse<T = any> {
+  success: boolean;
+  data?: T;
+  message?: string;
+  code?: number;
+}
+
+/**
+ * 轮询状态响应
+ */
+export interface PollStatusResponse {
+  status: LoginStatus;
+  code?: string;
+  message?: string;
+}
+
+// ==================== 枚举定义 ====================
 /**
  * 认证类型
  */
@@ -33,22 +90,25 @@ export enum AuthType {
 }
 
 /**
- * 登录状态枚举
+ * 登录状态
  */
 export enum LoginStatus {
-  PENDING = 0,   // 等待扫码
-  SCANNED = 1,   // 已扫码待确认
-  SUCCESS = 2,   // 登录成功
-  EXPIRED = 3,   // 二维码过期
-  FAILED = 4     // 登录失败
+  /** 等待扫码 */
+  PENDING = 0,
+  /** 已扫码待确认 */
+  SCANNED = 1,
+  /** 登录成功 */
+  SUCCESS = 2,
+  /** 二维码过期 */
+  EXPIRED = 3,
+  /** 登录失败 */
+  FAILED = 4
 }
 
-export interface ApiConfig {
-  config: string;
-  code2info: string;
-  status: string;
-}
-
+// ==================== 类型别名 ====================
+/**
+ * API 路由映射
+ */
 export type ApiRoutes = {
-  [K in AuthType]: ApiConfig
-}
+  [K in AuthType]: ApiConfig;
+};
