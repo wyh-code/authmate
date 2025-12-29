@@ -121,6 +121,10 @@ export abstract class BaseAuthService {
         this.traceId = traceId;
       }
 
+      if(!this.traceId && !traceId) {
+        throw new Error(`没有获取到 X-Trace-Id，后端转发请设置 X-Trace-Id`);
+      }
+
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }

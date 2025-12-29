@@ -1,6 +1,6 @@
 {
   "name": "@ostore/authmate",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "授权助手，轻松实现微信扫码登录",
   "author": "wyh-code <578311720@qq.com>",
   "license": "ISC",

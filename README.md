@@ -145,6 +145,9 @@ const router = new Router();
 
 const THIRD_PARTY_BASE = 'https://auth.mocknet.cn';
 
+//【重要】中间件设置响应头
+ctx.set('X-Trace-Id', 'X-Trace-Id');
+
 // 获取配置【Get config】
 router.get('/your/config', async (ctx) => {
   const { data } = await axios.get(`${THIRD_PARTY_BASE}/auth/wx/config`, {
@@ -154,6 +157,9 @@ router.get('/your/config', async (ctx) => {
   // 日志记录【Logging】
   console.log('[Auth] Config fetched', { ip: ctx.ip, timestamp: Date.now() });
   
+  //【重要】中间件若没有设置，需在此处使用三方认证接口响应的 X-Trace-Id
+  // ctx.set('X-Trace-Id', 'X-Trace-Id');
+
   ctx.body = data;
 });
 
